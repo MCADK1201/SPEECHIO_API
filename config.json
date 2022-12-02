@@ -1,0 +1,6 @@
+{
+  "generateUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+  "baseUrl": "https://speechmax.ai/",
+  "generatePath": "apis/landing/generateAudio/",
+  "fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+}

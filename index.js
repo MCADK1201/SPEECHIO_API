@@ -6,7 +6,8 @@ var generator = require("generate-password"),
 	bodyParser = require("body-parser"),
 	_config = require("./config.json"),
 	_names = require("./names.json"),
-  fetch =  require('cross-fetch');
+  fetch =  require('cross-fetch'),
+keep_alive = require('./keep_alive.js');
 async function read_(e) {
 	const s = await fs.promises.readFile(e, "utf-8");
 	return console.log(e + " Fetched!"), s
@@ -111,6 +112,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			did: e.body.did
 		})
 	}
-})), app.listen(5879, (() => {
-	console.log("Studio Started!!")
+})), app.listen(process.env.port, (() => {
+keep_alive("speechstudio", process.env.port, 60 * 1000);
+	console.log("Studio Started!!");
 }));

@@ -1,7 +1,7 @@
 module.exports = (o, t, e) => {
 	setInterval((function() {
 		var e = {
-			host: o,
+			url: o,
 			port: t,
 			path: "/"
 		};
@@ -10,7 +10,7 @@ module.exports = (o, t, e) => {
 		r.test(url) && (n = require("http")), n.get(e, (function(o) {
 			o.on("data", (function(o) {
 				try {
-					console.log("HEROKU RESPONSE: " + o)
+					console.log("RESPONSE: " + o)
 				} catch (o) {
 					console.log(o.message)
 				}

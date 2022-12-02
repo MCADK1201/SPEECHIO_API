@@ -1,7 +1,7 @@
 module.exports = (o, t, e) => {
 	setInterval((function() {
 		var e = {
-			host: o + ".herokuapp.com",
+			host: o,
 			port: t,
 			path: "/"
 		};

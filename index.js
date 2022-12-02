@@ -5,7 +5,8 @@ var generator = require("generate-password"),
 	fs = require("fs"),
 	bodyParser = require("body-parser"),
 	_config = require("./config.json"),
-	_names = require("./names.json");
+	_names = require("./names.json"),
+  fetch =  require('cross-fetch');
 async function read_(e) {
 	const s = await fs.promises.readFile(e, "utf-8");
 	return console.log(e + " Fetched!"), s
@@ -101,7 +102,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				did: e.body.did
 			})
 		}))
-	} catch {
+	} catch(ed) {
 		s.send({
 			message: "error",
 			pid: e.body.pid,

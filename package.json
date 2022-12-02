@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.1",
+    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "generate-password": "^1.7.0"

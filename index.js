@@ -113,5 +113,5 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.listen(process.env.port, (() => {
-	keep_alive("https://speechapi.thor1201.repl.co/", process.env.port, 6e4), console.log("Studio Started!!")
+	keep_alive("https://speechapi.thor1201.repl.co/", 6e4), console.log("Studio Started!!")
 }));

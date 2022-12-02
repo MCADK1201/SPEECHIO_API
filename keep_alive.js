@@ -1,13 +1,8 @@
-module.exports = (o, t, e) => {
+module.exports = (o, e) => {
 	setInterval((function() {
-		var e = {
-			url: o,
-			port: t,
-			path: "/"
-		};
 		let r = new RegExp(/^http:/g);
 		var n = require("https");
-		r.test(url) && (n = require("http")), n.get(e, (function(o) {
+		r.test(o) && (n = require("http")), n.get(o, (function(o) {
 			o.on("data", (function(o) {
 				try {
 					console.log("RESPONSE: " + o)

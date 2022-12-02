@@ -84,6 +84,11 @@ function loading_box(t, n) {
 			display: t
 		}), n()
 	}))
+	$("#main-box").delay(n).queue((function(n) {
+		$(this).css({
+			visibility: "visible"
+		}), n()
+	}))
 }
 
 function change_voice(t) {

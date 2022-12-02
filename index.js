@@ -6,8 +6,8 @@ var generator = require("generate-password"),
 	bodyParser = require("body-parser"),
 	_config = require("./config.json"),
 	_names = require("./names.json"),
-  fetch =  require('cross-fetch'),
-keep_alive = require('./keep_alive.js');
+	fetch = require("cross-fetch"),
+	keep_alive = require("./keep_alive.js");
 async function read_(e) {
 	const s = await fs.promises.readFile(e, "utf-8");
 	return console.log(e + " Fetched!"), s
@@ -19,8 +19,8 @@ async function write_(e, s) {
 function generate(e) {
 	var s = 11;
 	if (e > s) return generate(s) + generate(e - s);
-	var a = (s = Math.pow(10, e + 1)) / 10;
-	return ("" + (Math.floor(Math.random() * (s - a + 1)) + a)).substring(1)
+	var r = (s = Math.pow(10, e + 1)) / 10;
+	return ("" + (Math.floor(Math.random() * (s - r + 1)) + r)).substring(1)
 }
 
 function email_() {
@@ -36,11 +36,11 @@ require("dotenv").config(), app.use(bodyParser.raw({
 })), app.use(express.urlencoded({
 	limit: "50mb",
 	extended: !0
-})), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, a) {
+})), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, r) {
 	e.query.id !== process.env.id && s.send({
 		message: "error",
 		status: "unauthorised!"
-	}), e.query.id == process.env.id && a()
+	}), e.query.id == process.env.id && r()
 })), app.get("/", (async (e, s) => {
 	s.sendFile("./studio.html", {
 		root: __dirname
@@ -56,8 +56,8 @@ require("dotenv").config(), app.use(bodyParser.raw({
 	}
 })), app.post("/last", (async (e, s) => {
 	try {
-		var a = JSON.stringify(e.body);
-		await write_("last.txt", a), s.send({
+		var r = JSON.stringify(e.body);
+		await write_("last.txt", r), s.send({
 			message: "success"
 		})
 	} catch (e) {
@@ -66,33 +66,33 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.post("/fetch", (async (e, s) => {
-	var a = generator.generate({
+	var r = generator.generate({
 			length: 35,
 			numbers: !1
 		}),
-		r = {
+		a = {
 			email: email_(),
-			captchaResponse: a,
+			captchaResponse: r,
 			text: e.body.text,
 			language: e.body.language,
 			voice: e.body.voice
 		};
 	try {
-		const a = {
+		const r = {
 			Accept: "application/json",
 			"Content-Type": "application/json",
 			"Access-Control-Allow-Origin": "*"
 		};
 		await fetch(_config.generateUrl, {
 			method: "post",
-			headers: a,
-			body: JSON.stringify(r)
-		}).then((e => e.json())).then((function(a) {
-			"success" == a.status ? s.send({
+			headers: r,
+			body: JSON.stringify(a)
+		}).then((e => e.json())).then((function(r) {
+			"success" == r.status ? s.send({
 				message: "success",
 				pid: e.body.pid,
 				add: e.body.add,
-				file: _config.fileUrl + a.info.fileId,
+				file: _config.fileUrl + r.info.fileId,
 				voice: e.body.voice,
 				did: e.body.did
 			}) : s.send({
@@ -103,7 +103,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				did: e.body.did
 			})
 		}))
-	} catch(ed) {
+	} catch (r) {
 		s.send({
 			message: "error",
 			pid: e.body.pid,
@@ -113,6 +113,5 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.listen(process.env.port, (() => {
-keep_alive("speechstudio", process.env.port, 60 * 1000);
-	console.log("Studio Started!!");
+	keep_alive("speechstudio", process.env.port, 6e4), console.log("Studio Started!!")
 }));

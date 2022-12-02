@@ -1,21 +1,22 @@
-function startKeepAlive(t, e, o) {
+module.exports = (o, t, e) => {
 	setInterval((function() {
-		let e = new RegExp(/^http:/g);
-		var o = require("https");
-		e.test(t) && (o = require("http")), o.get({
-			host: "your_app_name.herokuapp.com",
-			port: 5879,
+		var e = {
+			host: o + ".herokuapp.com",
+			port: t,
 			path: "/"
-		}, (function(t) {
-			t.on("data", (function(t) {
+		};
+		let r = new RegExp(/^http:/g);
+		var n = require("https");
+		r.test(url) && (n = require("http")), n.get(e, (function(o) {
+			o.on("data", (function(o) {
 				try {
-					console.log("HEROKU RESPONSE: " + t)
-				} catch (t) {
-					console.log(t.message)
+					console.log("HEROKU RESPONSE: " + o)
+				} catch (o) {
+					console.log(o.message)
 				}
 			}))
-		})).on("error", (function(t) {
-			console.log("Error: " + t.message)
+		})).on("error", (function(o) {
+			console.log("Error: " + o.message)
 		}))
-	}), o)
+	}), e)
 };

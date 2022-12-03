@@ -1,1 +1,1 @@
-{"default_voice":"james","language":"English","data":[{"text":"Kk","voice":"james"},{"text":"Dk","voice":"james"}]}
+{"default_voice":"james","language":"English","data":[{"text":"Dk","voice":"james"}]}

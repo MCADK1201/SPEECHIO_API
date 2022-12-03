@@ -119,6 +119,7 @@ function add(t) {
 }
 
 function deleteAll() {
+	blob_reset();
 	if ($("#send").removeClass("disabled").addClass("btn-outline-primary").removeClass("btn-success"), $("#language-btn").removeClass("disabled"), $("#download").addClass("disabled"), confirm("Are your really want to delete all your content")) {
 		let t = default_voice();
 		$("#content-box").html(add_content_str(t, "")), remove_button_disable_enable("remove")
@@ -317,6 +318,7 @@ document.addEventListener(["input"], (function(t) {
 			})
 		})()
 	})), $(document.body).ready((() => {})), $(document).delegate("#file", "change", (function(t) {
+		blob_reset();
 		$("#send").removeClass("btn-success"), $("#send").addClass("btn-outline-primary");
 		var n = default_voice();
 		let e = t.target.files[0];

@@ -5,10 +5,10 @@ async function _mergeAll(n) {
 	})), _concat("concatAudio", new Date, n))
 }
 async function _concat(n, o, e) {
-	if (main_blob !== "") _download_(main_blob, o);
+	if (main_blob !== "") _download_(main_blob, o, sr = 48000);
 	else {
 		const a = new Crunker.default({
-				sampleRate: 44100
+				sampleRate: sr
 			}),
 			l = await a.fetchAudio(...e),
 			d = await a[n](l),

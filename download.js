@@ -5,10 +5,10 @@ async function _mergeAll(n) {
 			$(this).addClass("disabled")
 		}));
 		let e = $("#download").html();
-		e = e.split(/id="/g)[1], "download-again" == e ? _download_(a) : a = _concat("concatAudio", o, n), $("#download").removeClass("btn-outline-secondary").addClass("btn-outline-info").removeClass("disabled").children().replaceWith('<i class="fas fa-file-arrow-down mr-2" id="download-again">')
+		e = e.split(/id="/g)[1], "download-again" == e ? _download_(a) : a = _concat("concatAudio", n), $("#download").removeClass("btn-outline-secondary").addClass("btn-outline-info").removeClass("disabled").children().replaceWith('<i class="fas fa-file-arrow-down mr-2" id="download-again">')
 	}
 }
-async function _concat(n, o, a) {
+async function _concat(n, a) {
 	const e = new Crunker.default({
 			sampleRate: 44100
 		}),

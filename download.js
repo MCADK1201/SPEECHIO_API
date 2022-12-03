@@ -11,7 +11,7 @@ async function _mergeAll(n) {
 	}
 }
 async function _concat(n, o, e) {
-	const a = new Crunker.default,
+	const a = new Crunker.default({ sampleRate: 44100 }),
 		l = await a.fetchAudio(...e),
 		t = await a[n](l),
 		d = await a.export(t, "audio/mp3");

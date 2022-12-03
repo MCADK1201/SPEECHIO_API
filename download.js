@@ -7,7 +7,7 @@ async function _mergeAll(n) {
 		let e = $("#download").html();
 		e.split(/id="blob/g), e = "blob" + e[1], e = e.split(/">/g), console.log(e);
 		let a = new RegExp(/^blob:http/g);
-		void 0 !== e && "" !== e && null !== e ? a.test(e) ? (ajax_download(e, o + ".mp3"), $("#download").removeClass("btn-outline-info").removeClass("disabled").addClass("btn-outline-info").children().replaceWith(`<i class="fas fa-file-arrow-down mr-2" id="${e}">`)) : a.test(e) || _concat("concatAudio", o, n) : _concat("concatAudio", o, n)
+		void 0 !== e && "" !== e && null !== e ? a.test(e) ? (ajax_download(e, o + ".mp3"), window.URL.revokeObjectURL(e), $("#download").removeClass("btn-outline-secondary").addClass("btn-outline-info").children().replaceWith(`<i class="fas fa-file-arrow-down mr-2">`)) : a.test(e) || _concat("concatAudio", o, n) : _concat("concatAudio", o, n)
 	}
 }
 async function _concat(n, o, e) {

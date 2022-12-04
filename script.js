@@ -151,88 +151,93 @@ function default_voice_str(t) {
 }
 
 function send() {
-	$("#send").replaceWith('\n\n          <button class="btn btn-outline-primary btn-lg btn-block w-50 btn-block p-3 disabled" onclick="send()" id="send">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div>\n\n          </button>');
-	let t = [];
-	if ($(".content-box").each((function() {
-			let n = $(this).val(),
+	let tid = token_check();
+	if (tid == 0) {
+		return $("#send").replaceWith('<button class="btn btn-warning btn-lg btn-block w-50 btn-block p-3" onclick="send()" id="send">\n\n            <i class="fas fa-retweet mr-2"></i>\n\n          </button>');
+	} else {
+		$("#send").replaceWith('\n\n          <button class="btn btn-outline-primary btn-lg btn-block w-50 btn-block p-3 disabled" onclick="send()" id="send">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div>\n\n          </button>');
+		let t = [];
+		if ($(".content-box").each((function() {
+				let n = $(this).val(),
+					e = new RegExp(/^(?:(\d*)(?:(\d*))?|\s*)$/gm);
+				test = e.test(n), test ? test = "retry" : test = "go", t.push(test)
+			})), !t.includes("go")) return $("#send").replaceWith('<button class="btn btn-warning btn-lg btn-block w-50 btn-block p-3" onclick="send()" id="send">\n\n            <i class="fas fa-retweet mr-2"></i>\n\n          </button>');
+		var n = [],
+			e = [],
+			a = [],
+			s = (default_voice(), 1);
+		$(".content-box").each((function() {
+			let t = $($(this).parent()).parent(),
+				n = $(this).val(),
 				e = new RegExp(/^(?:(\d*)(?:(\d*))?|\s*)$/gm);
-			test = e.test(n), test ? test = "retry" : test = "go", t.push(test)
-		})), !t.includes("go")) return $("#send").replaceWith('<button class="btn btn-warning btn-lg btn-block w-50 btn-block p-3" onclick="send()" id="send">\n\n            <i class="fas fa-retweet mr-2"></i>\n\n          </button>');
-	var n = [],
-		e = [],
-		a = [],
-		s = (default_voice(), 1);
-	$(".content-box").each((function() {
-		let t = $($(this).parent()).parent(),
-			n = $(this).val(),
-			e = new RegExp(/^(?:(\d*)(?:(\d*))?|\s*)$/gm);
-		test = e.test(n), n ? (t.attr({
-			id: "content" + s
-		}), s++) : t.remove()
-	})), $(".content-box").each((function() {
-		a.push($(this).val())
-	})), $(".mdl").each((function() {
-		var t = $(this).html();
-		t = (t = t.split('src="')[1]).split('.png"')[0], e.push(t)
-	}));
-	var i = $("#language-area").val();
-	i = i.toLowerCase(), e.forEach(((t, s) => {
-		n.push({
-			text: a[s],
-			pid: "play" + (s + 1),
-			voice: e[s],
-			language: i,
-			did: "content" + (s + 1),
-			add: "add" + (s + 1)
-		})
-	})), $(".remove").each((function() {
-		$(this).addClass("disabled")
-	})), $(".add").each((function() {
-		$(this).addClass("disabled")
-	})), $("#language-btn").addClass("disabled"), $("#default-voice").addClass("disabled"), $(".file").css({
-		visibility: "hidden",
-		position: "absolute"
-	}), $(".content-box").each((function() {
-		$(this).attr({
-			readonly: !0
-		})
-	})), $(".mdl").each((function(t) {
-		$(this).attr({
-			id: `play${t+1}`
-		}), $(".mdl").addClass("disabled")
-	})), $(".add").each((function(t) {
-		$(this).attr({
-			id: `add${t+1}`
-		})
-	}));
-	var l = n.length,
-		o = 0,
-		d = 0;
-	n.forEach((async (t, e) => {
-		await $.ajaxQueue({
-			type: "POST",
-			url: "fetch?id=mcadk",
-			data: JSON.stringify(n[e]),
-			contentType: "application/json",
-			dataType: "json",
-			beforeSend: function() {
-				$("#delete-all").addClass("disabled"), $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-outline-info  btn-md disabled" id="${n[e].pid}">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div></button>`)
-			},
-			success: function(t) {
-				"success" == t.message ? (o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${t.file}">\n\n                   <source src="${t.file}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), ajex_complete(l, o, d), setTimeout((() => {
-					back_to_voice(`#${t.pid}`, t.voice), sub_enbl(`#${t.did}`)
-				}), 1500), $("#delete-all").removeClass("disabled")) : "error" == t.message && (d++, o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
-					sub_enbl(`#${t.did}`)
-				}), 90))
-			},
-			error: function(t) {
-				d++, o++, $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${n[e].did}-${n[e].voice}" id="${n[e].pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
-					sub_enbl(`#${n[e].did}`)
-				}), 90)
-			},
-			timeout: 15e4
-		})
-	}))
+			test = e.test(n), n ? (t.attr({
+				id: "content" + s
+			}), s++) : t.remove()
+		})), $(".content-box").each((function() {
+			a.push($(this).val())
+		})), $(".mdl").each((function() {
+			var t = $(this).html();
+			t = (t = t.split('src="')[1]).split('.png"')[0], e.push(t)
+		}));
+		var i = $("#language-area").val();
+		i = i.toLowerCase(), e.forEach(((t, s) => {
+			n.push({
+				text: a[s],
+				pid: "play" + (s + 1),
+				voice: e[s],
+				language: i,
+				did: "content" + (s + 1),
+				add: "add" + (s + 1)
+			})
+		})), $(".remove").each((function() {
+			$(this).addClass("disabled")
+		})), $(".add").each((function() {
+			$(this).addClass("disabled")
+		})), $("#language-btn").addClass("disabled"), $("#default-voice").addClass("disabled"), $(".file").css({
+			visibility: "hidden",
+			position: "absolute"
+		}), $(".content-box").each((function() {
+			$(this).attr({
+				readonly: !0
+			})
+		})), $(".mdl").each((function(t) {
+			$(this).attr({
+				id: `play${t+1}`
+			}), $(".mdl").addClass("disabled")
+		})), $(".add").each((function(t) {
+			$(this).attr({
+				id: `add${t+1}`
+			})
+		}));
+		var l = n.length,
+			o = 0,
+			d = 0;
+		n.forEach((async (t, e) => {
+			await $.ajaxQueue({
+				type: "POST",
+				url: "fetch?id=mcadk",
+				data: JSON.stringify(n[e]),
+				contentType: "application/json",
+				dataType: "json",
+				beforeSend: function() {
+					$("#delete-all").addClass("disabled"), $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-outline-info  btn-md disabled" id="${n[e].pid}">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div></button>`)
+				},
+				success: function(t) {
+					"success" == t.message ? (o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${t.file}">\n\n                   <source src="${t.file}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), ajex_complete(l, o, d), setTimeout((() => {
+						back_to_voice(`#${t.pid}`, t.voice), sub_enbl(`#${t.did}`)
+					}), 1500), $("#delete-all").removeClass("disabled")) : "error" == t.message && (d++, o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
+						sub_enbl(`#${t.did}`)
+					}), 90))
+				},
+				error: function(t) {
+					d++, o++, $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${n[e].did}-${n[e].voice}" id="${n[e].pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
+						sub_enbl(`#${n[e].did}`)
+					}), 90)
+				},
+				timeout: 15e4
+			})
+		}))
+	}
 }
 
 function ajex_complete(t, n, e) {

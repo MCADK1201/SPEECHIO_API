@@ -17,7 +17,6 @@
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<script>
 			var token;
-
 			function onloadCallback() {
 				token = grecaptcha.render("token", {
 					"sitekey": "6LdBnhQUAAAAAMkYSqdAnkafemcA6JtM1N3hlgiL",
@@ -25,7 +24,6 @@
 					"callback": token_check,
 				})
 			};
-
 			function token_check() {
 				let d = grecaptcha.getResponse(token);
 				if (d.length == 0) {

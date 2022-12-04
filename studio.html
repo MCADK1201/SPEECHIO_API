@@ -29,7 +29,8 @@
 			function token_check() {
 				let d = grecaptcha.getResponse(token);
 				if (d.length == 0) {
-					grecaptcha.reset(token)
+					grecaptcha.reset(token);
+					return 0;
 				} else {
 					return d;
 				}

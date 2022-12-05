@@ -17,27 +17,33 @@
 		<script src="audio.js"></script>
 		<script src="download.js"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-		<script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
-		<script>
-			var token;
-			function onloadCallback() {
-				token = grecaptcha.render("token", {
-					"sitekey": "6LdBnhQUAAAAAMkYSqdAnkafemcA6JtM1N3hlgiL",
-					"theme": "light",
-					"callback": token_check,
-				})
-			};
-			function token_check() {
-				let d = grecaptcha.getResponse(token);
-				if (d.length == 0) {
-					grecaptcha.reset(token);
-					return 0;
-				} else {
-					return d;
-				}
-			};
-		</script>
-		<script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+    <script>
+      (function() {
+        var w = window,
+          C = "___grecaptcha_cfg",
+          cfg = (w[C] = w[C] || {}),
+          N = "grecaptcha";
+        var gr = (w[N] = w[N] || {});
+        gr.ready = gr.ready || function(f) {
+          (cfg["fns"] = cfg["fns"] || []).push(f);
+        };
+        w["__recaptcha_api"] = "https://www.google.com/recaptcha/api2/";
+        (cfg["render"] = cfg["render"] || []).push("onload");
+        w["__google_recaptcha_client"] = true;
+        var d = document,
+          po = d.createElement("script");
+        po.type = "text/javascript";
+        po.async = true;
+        po.src = "getToken.js";
+        var e = d.querySelector("script[nonce]"),
+          n = e && (e["nonce"] || e.getAttribute("nonce"));
+        if (n) {
+          po.setAttribute("nonce", n);
+        }
+        var s = d.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(po, s);
+      })();
+    </script>
 	</head>
 	<body>
 		<div id="loading-box">
@@ -119,8 +125,7 @@
 					</div>
 				</div>
 				<div class="form-group mt-4">
-					<div id="token">
-					</div>
+					<div class="g-recaptcha" data-sitekey="6LdBnhQUAAAAAMkYSqdAnkafemcA6JtM1N3hlgiL"></div>
 				</div>
 				<div class="form-group mt-4">
 					<div class="input-group w-100">

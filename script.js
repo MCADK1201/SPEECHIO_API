@@ -75,7 +75,7 @@ function retryAll() {
 
 function voice_default_change() {
 	let t = $("#language-area").val();
-	t = "Hindi" == t ? "English" : "Hindi", $("#language-area").val(t)
+	t = "Hindi" == t ? "Hindi" : "Hindi", $("#language-area").val(t)
 }
 
 function loading_box(t, n) {

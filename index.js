@@ -1,5 +1,8 @@
-const RequestQueue = require('node-request-queue');
-let rq = new RequestQueue(1);
+const RequestQueue = require('node-request-queue'),
+  rq = new RequestQueue(1);
+
+var createBuffer = require('audio-buffer-from'),
+  utils = require('audio-buffer-utils');
 
 var generator = require("generate-password"),
 	express = require("express"),
@@ -134,13 +137,18 @@ require("dotenv").config(), app.use(bodyParser.raw({
 
 			rq.on('resolved', res => {
 
-				arrayBuffers[`${index_queue}`] = Buffer.from(res);
+				arrayBuffers[`${index_queue}`] = createBuffer(Buffer.from(res), 'interleaved')
 				index_queue++;
+        
 			}).on('rejected', err => {
 				rq.push(req_container[index_queue]);
 				number.splice(index_queue, 1);
 				number.push(index_queue);
 			}).on('completed', () => {
+        let buffers = Object.values(arrayBuffers);
+        let merged_audio = utils.concat(buffers);
+        console.log(merged_audio)
+        
 				index_queue = 0;
 				s.send({
 					message: "error",
@@ -153,7 +161,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			});
 		}
 	} catch (r) {
-		console.log(r)
+    console.log(r)
 		s.send({
 			message: "error",
 			pid: e.body.pid,

@@ -1,8 +1,8 @@
 const RequestQueue = require('node-request-queue'),
-  rq = new RequestQueue(1);
+	rq = new RequestQueue(1);
 
 var createBuffer = require('audio-buffer-from'),
-  utils = require('audio-buffer-utils');
+	utils = require('audio-buffer-utils');
 
 var generator = require("generate-password"),
 	express = require("express"),
@@ -96,20 +96,30 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				headers: h,
 				body: JSON.stringify(a)
 			}).then((e => e.json())).then((function(r) {
-				"success" == r.status ? s.send({
-					message: "success",
-					pid: e.body.pid,
-					add: e.body.add,
-					file: model.fileUrl + r.info.fileId,
-					voice: e.body.voice,
-					did: e.body.did
-				}) : s.send({
-					message: "error",
-					pid: e.body.pid,
-					add: e.body.add,
-					voice: e.body.voice,
-					did: e.body.did
-				})
+				if (r.status == "success") {
+					fetch(model.fileUrl + r.info.fileId, {
+						method: "get",
+						responseType: "arraybuffer"
+					}).then((_e => _e.arrayBuffer())).then(_b => {
+						let buffer = createBuffer(Buffer.from(_b), 'interleaved');
+						s.send({
+							message: "success",
+							pid: e.body.pid,
+							add: e.body.add,
+							audio: buffer,
+							voice: e.body.voice,
+							did: e.body.did
+						});
+					});
+				} else {
+					s.send({
+						message: "error",
+						pid: e.body.pid,
+						add: e.body.add,
+						voice: e.body.voice,
+						did: e.body.did
+					})
+				};
 			}));
 		} else if (model["method"] == "get") {
 			let text = e.body.text;
@@ -139,29 +149,26 @@ require("dotenv").config(), app.use(bodyParser.raw({
 
 				arrayBuffers[`${index_queue}`] = createBuffer(Buffer.from(res), 'interleaved')
 				index_queue++;
-        
+
 			}).on('rejected', err => {
 				rq.push(req_container[index_queue]);
 				number.splice(index_queue, 1);
 				number.push(index_queue);
 			}).on('completed', () => {
-        let buffers = Object.values(arrayBuffers);
-        let merged_audio = utils.concat(buffers);
-        console.log(merged_audio)
-        
+				let buffers = Object.values(arrayBuffers);
+				let merged_audio = utils.concat(buffers);
 				index_queue = 0;
 				s.send({
-					message: "error",
+					message: "success",
 					pid: e.body.pid,
 					add: e.body.add,
-					"file": "file",
+					audio: merged_audio,
 					voice: e.body.voice,
 					did: e.body.did
 				});
 			});
 		}
 	} catch (r) {
-    console.log(r)
 		s.send({
 			message: "error",
 			pid: e.body.pid,

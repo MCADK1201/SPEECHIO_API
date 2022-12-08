@@ -14,29 +14,6 @@
     <script src="audio.js"></script>
     <script src="download.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
-    <script>
-      var token;
-
-      function onloadCallback() {
-        token = grecaptcha.render("token", {
-          "sitekey": "6LdBnhQUAAAAAMkYSqdAnkafemcA6JtM1N3hlgiL",
-          "theme": "light",
-          "callback": token_check,
-        })
-      };
-
-      function token_check() {
-        let d = grecaptcha.getResponse(token);
-        if (d.length == 0) {
-          grecaptcha.reset(token);
-          return 0;
-        } else {
-          return d;
-        }
-      };
-    </script>
-    <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
   </head>
   <body>
     <div id="loading-box">
@@ -118,7 +95,6 @@
           </div>
         </div>
         <div class="form-group mt-4">
-          <div id="token"></div>
         </div>
         <div class="form-group mt-4">
           <div class="input-group w-100">

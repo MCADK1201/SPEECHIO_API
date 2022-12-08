@@ -69,17 +69,6 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.post("/fetch", (async (e, s) => {
-	var r = generator.generate({
-			length: 35,
-			numbers: !1
-		}),
-		a = {
-			email: email_(),
-			captchaResponse: r,
-			text: e.body.text,
-			language: e.body.language,
-			voice: e.body.voice
-		};
 	try {
 		let model = _voices[e.body.voice];
 		if (model["method"] == "post") {
@@ -94,14 +83,14 @@ require("dotenv").config(), app.use(bodyParser.raw({
 					language: e.body.language,
 					voice: e.body.voice
 				};
-			const r = {
+			const h = {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "*"
 			};
 			await fetch(model.baseUrl, {
 				method: "post",
-				headers: r,
+				headers: h,
 				body: JSON.stringify(a)
 			}).then((e => e.json())).then((function(r) {
 				"success" == r.status ? s.send({

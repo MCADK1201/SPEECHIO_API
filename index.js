@@ -111,14 +111,14 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		} else if (model["method"] == "get") {
 			let text = e.body.text;
 			let slice_rate = model.limit;
-			let loops = Math.ceil((text_len.length / slice_rate));
+			let loops = Math.ceil((text.length / slice_rate));
 			let req_container = [];
 
 			for (i = 0; i < loops; i++) {
 				let sliced_text = text.slice((i * slice_rate), ((i + 1) * slice_rate));
 				let request = {
 					method: 'GET',
-					uri: model.baseUrl + sliced_text
+					uri: model.baseUrl + fixedEncodeURIComponent(sliced_text)
 				};
 				req_container.push(request);
 			};
@@ -129,19 +129,13 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				number.push(j);
 				j++;
 			});
-
 			let index_queue = 0;
 			let arrayBuffers = {};
 
 			rq.on('resolved', res => {
-				if(res.headers['Content-Type'] && !res.headers['Content-Type'].includes('audio/')) {
-					rq.push(req_container[index_queue]);
-					number.splice(index_queue, 1);
-					number.push(index_queue);
-				} else {
-					arrayBuffers[`${index_queue}`] = res.arrayBuffer();
-					index_queue++;
-				}
+
+				arrayBuffers[`${index_queue}`] = Buffer.from(res);
+				index_queue++;
 			}).on('rejected', err => {
 				rq.push(req_container[index_queue]);
 				number.splice(index_queue, 1);
@@ -152,13 +146,14 @@ require("dotenv").config(), app.use(bodyParser.raw({
 					message: "error",
 					pid: e.body.pid,
 					add: e.body.add,
-					file,
+					"file": "file",
 					voice: e.body.voice,
 					did: e.body.did
 				});
 			});
 		}
 	} catch (r) {
+		console.log(r)
 		s.send({
 			message: "error",
 			pid: e.body.pid,
@@ -170,3 +165,9 @@ require("dotenv").config(), app.use(bodyParser.raw({
 })), app.listen(process.env.port, (() => {
 	keep_alive("https://speechstudio.thor1201.repl.co/", 6e4), console.log("Studio Started!!")
 }));
+
+function fixedEncodeURIComponent(str) {
+	return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+		return '%' + c.charCodeAt(0).toString(16);
+	});
+};

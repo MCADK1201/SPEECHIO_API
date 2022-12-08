@@ -1,3 +1,6 @@
+const RequestQueue = require('node-request-queue');
+let rq = new RequestQueue(1);
+
 var generator = require("generate-password"),
 	express = require("express"),
 	app = express(),
@@ -78,31 +81,94 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			voice: e.body.voice
 		};
 	try {
-		const r = {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			"Access-Control-Allow-Origin": "*"
-		};
-		await fetch(_config.generateUrl, {
-			method: "post",
-			headers: r,
-			body: JSON.stringify(a)
-		}).then((e => e.json())).then((function(r) {
-			"success" == r.status ? s.send({
-				message: "success",
-				pid: e.body.pid,
-				add: e.body.add,
-				file: _config.fileUrl + r.info.fileId,
-				voice: e.body.voice,
-				did: e.body.did
-			}) : s.send({
-				message: "error",
-				pid: e.body.pid,
-				add: e.body.add,
-				voice: e.body.voice,
-				did: e.body.did
-			})
-		}))
+		let model = _voices[e.body.voice];
+		if (model["method"] == "post") {
+			var r = generator.generate({
+					length: 35,
+					numbers: !1
+				}),
+				a = {
+					email: email_(),
+					captchaResponse: r,
+					text: e.body.text,
+					language: e.body.language,
+					voice: e.body.voice
+				};
+			const r = {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*"
+			};
+			await fetch(model.baseUrl, {
+				method: "post",
+				headers: r,
+				body: JSON.stringify(a)
+			}).then((e => e.json())).then((function(r) {
+				"success" == r.status ? s.send({
+					message: "success",
+					pid: e.body.pid,
+					add: e.body.add,
+					file: model.fileUrl + r.info.fileId,
+					voice: e.body.voice,
+					did: e.body.did
+				}) : s.send({
+					message: "error",
+					pid: e.body.pid,
+					add: e.body.add,
+					voice: e.body.voice,
+					did: e.body.did
+				})
+			}));
+		} else if (model["method"] == "get") {
+			let text = e.body.text;
+			let slice_rate = model.limit;
+			let loops = Math.ceil((text_len.length / slice_rate));
+			let req_container = [];
+
+			for (i = 0; i < loops; i++) {
+				let sliced_text = text.slice((i * slice_rate), ((i + 1) * slice_rate));
+				let request = {
+					method: 'GET',
+					uri: model.baseUrl + sliced_text
+				};
+				req_container.push(request);
+			};
+			rq.pushAll(req_container);
+			let number = [];
+			let j = 0;
+			req_container.forEach(() => {
+				number.push(j);
+				j++;
+			});
+
+			let index_queue = 0;
+			let arrayBuffers = {};
+
+			rq.on('resolved', res => {
+				if(res.headers['Content-Type'] && !res.headers['Content-Type'].includes('audio/')) {
+					rq.push(req_container[index_queue]);
+					number.splice(index_queue, 1);
+					number.push(index_queue);
+				} else {
+					arrayBuffers[`${index_queue}`] = res.arrayBuffer();
+					index_queue++;
+				}
+			}).on('rejected', err => {
+				rq.push(req_container[index_queue]);
+				number.splice(index_queue, 1);
+				number.push(index_queue);
+			}).on('completed', () => {
+				index_queue = 0;
+				s.send({
+					message: "error",
+					pid: e.body.pid,
+					add: e.body.add,
+					file,
+					voice: e.body.voice,
+					did: e.body.did
+				});
+			});
+		}
 	} catch (r) {
 		s.send({
 			message: "error",

@@ -5,10 +5,10 @@ async function _mergeAll(n) {
 	})), _concat("concatAudio", new Date, n))
 }
 async function _concat(n, o, e) {
-	if (main_blob !== "") _download_(main_blob, o, sr = 48000);
+	if (main_blob !== "") _download_(main_blob, o);
 	else {
 		const a = new Crunker.default({
-				sampleRate: sr
+				sampleRate: 48000
 			}),
 			l = await a.fetchAudio(...e),
 			d = await a[n](l),
@@ -21,7 +21,7 @@ async function _concat(n, o, e) {
 function _download_(n, o) {
 	const e = window.URL.createObjectURL(n),
 		a = document.createElement("a");
-	a.style.display = "none", a.href = e, a.download = o + `.${n.type.split('/')[1]}`, document.body.appendChild(a), a.click(), a.remove(), window.URL.revokeObjectURL(e)
+	a.style.display = "none", a.href = e, a.download = o, document.body.appendChild(a), a.click(), a.remove(), window.URL.revokeObjectURL(e)
 }
 
 function blob_reset() {

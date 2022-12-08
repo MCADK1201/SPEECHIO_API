@@ -151,7 +151,6 @@ function default_voice_str(t) {
 }
 
 function send() {
-	let tid = token_check();
 	if (tid == 0) {
 		return $("#send").replaceWith('<button class="btn btn-warning btn-lg btn-block w-50 btn-block p-3" onclick="send()" id="send">\n\n            <i class="fas fa-retweet mr-2"></i>\n\n          </button>');
 	} else {

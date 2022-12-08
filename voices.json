@@ -16,22 +16,27 @@
 	},
 	"nitika": {
 		"baseUrl": "http://ivrapi.indiantts.co.in/tts?type=indiantts&user_id=80&action=play&lang=hi_mohita&speed=1.11&numeric=hcurrency&api_key=2d108780-0b86-11e6-b056-07d516fb06e1d&text=",
-		"method": "get"
+		"method": "get",
+		"limit": 60
 	},
 	"mohit": {
 		"baseUrl": "http://ivrapi.indiantts.co.in/tts?type=indiantts&user_id=80&action=play&lang=hi_thomas&speed=1.11&numeric=hcurrency&api_key=2d108780-0b86-11e6-b056-07d516fb06e1d&text=",
-		"method": "get"
+		"method": "get",
+		"limit": 60
 	},
 	"devika": {
 		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-A&text=",
-		"method": "get"
+		"method": "get",
+		"limit": 500
 	},
 	"navneet": {
 		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
-		"method": "get"
+		"method": "get",
+		"limit": 500
 	},
 	"mohan": {
 		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
-		"method": "get"
+		"method": "get",
+		"limit": 500
 	}
 }

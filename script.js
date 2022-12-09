@@ -48,9 +48,7 @@ async function retry(t) {
 				$("#send").replaceWith('\n\n          <button class="btn btn-outline-primary btn-lg btn-block w-50 btn-block p-3 disabled" onclick="send()" id="send">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div>\n\n          </button>'), $(`#${o[n].pid}`).replaceWith(`<button class="btn btn-outline-info  btn-md disabled" id="${o[n].pid}">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div></button>`)
 			},
 			success: async function(t) {
-				"success" == t.message ? ($(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), _audio = await checkAudio(t.audio), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${_audio}">\n\n                   <source src="${_audio}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), setTimeout((() => {
-					$("#download").removeClass("disabled"), back_to_voice(`#${t.pid}`, t.voice), sub_enbl(`#${t.did}`)
-				}), 1500), $("#send").replaceWith('<button class="btn btn-success disabled btn-lg btn-block w-50 btn-block p-3" id="send">\n\n            <i class="fas fa-check mr-2"></i>\n\n          </button>'), $(".file").css({
+				"success" == t.message ? (await checkAudio(t), $("#send").replaceWith('<button class="btn btn-success disabled btn-lg btn-block w-50 btn-block p-3" id="send">\n\n            <i class="fas fa-check mr-2"></i>\n\n          </button>'), $(".file").css({
 					visibility: "visible",
 					position: "relative"
 				})) : "error" == t.message && ($(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), setTimeout((() => {
@@ -218,9 +216,7 @@ function send() {
 				$("#delete-all").addClass("disabled"), $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-outline-info  btn-md disabled" id="${n[e].pid}">\n\n            <div class="spinner-border text-info" role="status">\n\n  <span class="sr-only">Loading...</span>\n\n</div></button>`)
 			},
 			success: async function(t) {
-				"success" == t.message ? (o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), audio = await checkAudio(t.audio), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${audio}">\n\n                   <source src="${audio}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), ajex_complete(l, o, d), setTimeout((() => {
-					back_to_voice(`#${t.pid}`, t.voice), sub_enbl(`#${t.did}`)
-				}), 1500), $("#delete-all").removeClass("disabled")) : "error" == t.message && (d++, o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
+				"success" == t.message ? (o++, ajex_complete(l, o, d), await checkAudio(t)) : "error" == t.message && (d++, o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
 					sub_enbl(`#${t.did}`)
 				}), 90))
 			},

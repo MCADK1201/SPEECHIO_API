@@ -1,5 +1,3 @@
-const RequestQueue = require("node-request-queue"),
-	rq = new RequestQueue(1);
 var generator = require("generate-password"),
 	express = require("express"),
 	app = express(),
@@ -119,37 +117,23 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			let o = e.body.text,
 				t = r.limit,
 				a = Math.ceil(o.length / t),
-				d = [];
-			for (i = 0; i < a; i++) {
-				let e = o.slice(i * t, (i + 1) * t),
-					s = {
-						method: "GET",
-						uri: r.baseUrl + fixedEncodeURIComponent(e)
-					};
-				d.push(s)
-			}
-			rq.pushAll(d);
-			let n = [],
-				c = 0;
-			d.forEach((() => {
-				n.push(c), c++
-			}));
-			let p = 0,
+				d = [],
 				u = {};
-			rq.on("resolved", (async e => {
-				u[`${p}`] = d[p].uri, p++
-			})).on("rejected", (e => {
-				rq.push(d[p]), n.splice(p, 1), n.push(p)
-			})).on("completed", (() => {
-				p = 0, s.send({
-					message: "success",
-					pid: e.body.pid,
-					add: e.body.add,
-					audio: u,
-					voice: e.body.voice,
-					did: e.body.did
-				})
-			}))
+			for (i = 0; i < a; i++) {
+				let e = o.slice(i * t, (i + 1) * t);
+				u[`${(i + 1)}`] = r.baseUrl + fixedEncodeURIComponent(e);
+			}
+
+
+
+			p = 0, s.send({
+				message: "success",
+				pid: e.body.pid,
+				add: e.body.add,
+				audio: u,
+				voice: e.body.voice,
+				did: e.body.did
+			})
 		}
 	} catch (o) {
 		s.send({

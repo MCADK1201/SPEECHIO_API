@@ -13,8 +13,7 @@ async function checkAudio(t) {
 		const e = window.URL.createObjectURL(i.blob);
 		url = e;
 	}
-	($(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${audio}">\n\n                   <source src="${audio}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), setTimeout((() => {
+	($(`#${t.pid}`).replaceWith(`<button class="btn btn-success  btn-md" id="${t.pid}">\n\n                <i class="fas fa-check-double mr-2"></i></div></button>`), $(`#${t.add}`).replaceWith(`<div class="container-audio" id="${t.add}"><audio controls controlsList="nodownload noplaybackrate novolume" id="${url}">\n\n                   <source src="${url}">\n\n                   Your browser dose not Support the audio Tag\n\n               </audio></div>`), setTimeout((() => {
 		back_to_voice(`#${t.pid}`, t.voice), sub_enbl(`#${t.did}`)
 	}), 1500), $("#delete-all").removeClass("disabled"))
-	return url;
 };

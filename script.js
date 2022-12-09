@@ -218,7 +218,7 @@ function send() {
 			success: async function(t) {
 				"success" == t.message ? (o++, ajex_complete(l, o, d), await checkAudio(t)) : "error" == t.message && (d++, o++, $(`#${t.pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${t.did}-${t.voice}" id="${t.pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {
 					sub_enbl(`#${t.did}`)
-				}), 90))
+				}), 90));
 			},
 			error: function(t) {
 				d++, o++, $(`#${n[e].pid}`).replaceWith(`<button class="btn btn-warning  btn-md retry id-${n[e].did}-${n[e].voice}" id="${n[e].pid}" onclick="retry(this)">\n\n                <i class="fas fa-rotate mr-2"></i>\n\n</div></button>`), ajex_complete(l, o, d), setTimeout((() => {

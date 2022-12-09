@@ -123,9 +123,6 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				let e = o.slice(i * t, (i + 1) * t);
 				u[`${(i + 1)}`] = r.baseUrl + fixedEncodeURIComponent(e);
 			}
-
-
-
 			p = 0, s.send({
 				message: "success",
 				pid: e.body.pid,

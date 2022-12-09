@@ -93,7 +93,7 @@ function change_voice(t) {
 	let n = $(t).html();
 	n = n.split('src="')[1], n = n.split('.png"')[0];
 	let e = $(t).html();
-	e = e.replace(/src="\w+.\w+"/g, `src="${{"karishma":"mohan","james":"karishma","akash":"james","nitika":"akash","mohit":"nitika","devika":"mohit","navneet":"devika","mohan":"navneet"}[n]}.png"`), $(t).html(e)
+	e = e.replace(/src="\w+.\w+"/g, `src="${{"karishma":"mohan","james":"karishma","akash":"james","devika":"akash","navneet":"devika","mohan":"navneet"}[n]}.png"`), $(t).html(e)
 }
 
 function default_voice() {

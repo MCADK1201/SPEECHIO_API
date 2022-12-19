@@ -46,6 +46,17 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		message: "error",
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
+})), app.get("/", (async (e, s) => {
+	try {
+		s.send({
+			message: "success",
+			voice: Object.keys(_voices)
+		})
+	} catch (e) {
+		s.send({
+			message: "error"
+		})
+	}
 })), app.get("/last", (async (e, s) => {
 	try {
 		let e = await read_("./last.txt");

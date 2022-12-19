@@ -6,8 +6,7 @@ var generator = require("generate-password"),
 	bodyParser = require("body-parser"),
 	_voices = require("./voices.json"),
 	_names = require("./names.json"),
-	fetch = require("cross-fetch"),
-	keep_alive = require("./keep_alive.js");
+	fetch = require("cross-fetch");
 async function read_(e) {
 	const s = await fs.promises.readFile(e, "utf-8");
 	return console.log(e + " Fetched!"), s
@@ -47,10 +46,6 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		message: "error",
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
-})), app.get("/", (async (e, s) => {
-	s.sendFile("./studio.html", {
-		root: __dirname
-	})
 })), app.get("/last", (async (e, s) => {
 	try {
 		let e = await read_("./last.txt");
@@ -142,5 +137,5 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.listen(process.env.port, (() => {
-	keep_alive("https://speechstudio.thor1201.repl.co/", 6e5), console.log("Studio Started!!")
+	console.log("Studio Started!!");
 }));

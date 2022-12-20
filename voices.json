@@ -1,0 +1,32 @@
+{
+	"karishma": {
+		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+		"method": "post",
+		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+	},
+	"james": {
+		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+		"method": "post",
+		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+	},
+	"akash": {
+		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+		"method": "post",
+		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+	},
+	"devika": {
+		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-A&text=",
+		"method": "get",
+		"limit": 500
+	},
+	"navneet": {
+		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
+		"method": "get",
+		"limit": 500
+	},
+	"mohan": {
+		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
+		"method": "get",
+		"limit": 500
+	}
+}

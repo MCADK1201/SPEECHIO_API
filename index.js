@@ -6,8 +6,7 @@ var generator = require("generate-password"),
 	bodyParser = require("body-parser"),
 	_voices = require("./voices.json"),
 	_names = require("./names.json"),
-	fetch = require("cross-fetch"),
-	cors = require("cors");
+	fetch = require("cross-fetch");
 async function read_(e) {
 	const s = await fs.promises.readFile(e, "utf-8");
 	return console.log(e + " Fetched!"), s
@@ -35,12 +34,6 @@ function fixedEncodeURIComponent(e) {
 		return "%" + e.charCodeAt(0).toString(16)
 	}))
 }
-app.use(cors({
-    credentials: true,
-    preflightContinue: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH' , 'DELETE', 'OPTIONS'],
-    origin: true
-}));
 require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({

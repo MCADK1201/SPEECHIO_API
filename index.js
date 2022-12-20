@@ -36,7 +36,7 @@ function fixedEncodeURIComponent(e) {
 	}))
 }
 app.options("/", cors(), function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "myclient.site");
+  res.setHeader("Access-Control-Allow-Origin", "https://speechi0.web.app/");
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.end();

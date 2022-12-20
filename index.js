@@ -35,12 +35,12 @@ function fixedEncodeURIComponent(e) {
 		return "%" + e.charCodeAt(0).toString(16)
 	}))
 }
-app.options("/", cors(), function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "https://speechi0.web.app/");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.end();
-});
+app.use(cors({
+    credentials: true,
+    preflightContinue: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH' , 'DELETE', 'OPTIONS'],
+    origin: true
+}));
 require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({

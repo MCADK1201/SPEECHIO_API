@@ -7,7 +7,10 @@ var generator = require("generate-password"),
   _voices = require("./voices.json"),
   _names = require("./names.json"),
   fetch = require("cross-fetch"),
-  cors = require('cors');
+  cors = require('cors'),
+  CyclicDB = require('@cyclic.sh/dynamodb'),
+  db = CyclicDB('last');
+
 async function read_(e) {
   const s = await fs.promises.readFile(e, "utf-8");
   return console.log(e + " Fetched!"), s

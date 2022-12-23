@@ -7,18 +7,26 @@ var generator = require("generate-password"),
   _names = require("./names.json"),
   fetch = require("cross-fetch"),
   cors = require('cors'),
-  CyclicDb = require("@cyclic.sh/dynamodb"),
-  db = CyclicDb(process.env.CYCLIC_DB),
-  last = db.collection('last');
+  mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
+
+mongoose.connect(process.env.mongo).then(() => console.log('Mongoose Connected!'));
+
+const lastSchema = new Schema({
+  _id: String,
+  data: String
+});
+
+lastSchema.create({ _id: 'mcadk' });
 
 async function read_(e) {
-  const s = await last.get(e);
-  return console.log(s + " Fetched!"), s.data
+  const s = await lastSchema.findOne({ _id: 'mcadk' });
+  return console.log(e + " Fetched!"), s.data
 }
 
 async function write_(e, s) {
-  let k = await last.set(e, {data: s});
-  console.log(`${k}: Write!`);
+  let k = await last.findOneAndUpdate({ _id: 'mcadk' }, { data: s });
+  console.log(`${e}: Write!`);
 }
 
 function generate(e) {

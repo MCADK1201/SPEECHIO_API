@@ -35,6 +35,9 @@ function fixedEncodeURIComponent(e) {
 		return "%" + e.charCodeAt(0).toString(16)
 	}))
 }
+function setHeaders(res) {
+	res.setHeader("Cache-Control", "public,max-age=31536000,immutable");
+}
 require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({
@@ -48,6 +51,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
 })), app.get("/", (async (e, s) => {
+	setHeaders(s);
 	try {
 		s.send({
 			message: "success",
@@ -59,6 +63,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.get("/last", (async (e, s) => {
+	setHeaders(s);
 	try {
 		let e = await read_("./last.txt");
 		e = JSON.parse(e), e.message = "success", s.send(e)
@@ -68,6 +73,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.post("/last", (async (e, s) => {
+	setHeaders(s);
 	try {
 		var o = JSON.stringify(e.body);
 		await write_("last.txt", o), s.send({
@@ -79,6 +85,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 		})
 	}
 })), app.post("/fetch", (async (e, s) => {
+	setHeaders(s);
 	try {
 		let r = _voices[e.body.voice];
 		var o = generator.generate({

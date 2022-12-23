@@ -25,10 +25,6 @@ const lastSchema = new Schema({
 	data: String
 });
 
-lastSchema.create({
-	_id: 'mcadk'
-});
-
 async function read_(e) {
 	const s = await lastSchema.findOne({
 		_id: 'mcadk'

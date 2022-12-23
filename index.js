@@ -8,7 +8,7 @@ var generator = require("generate-password"),
   fetch = require("cross-fetch"),
   cors = require('cors'),
   CyclicDB = require('@cyclic.sh/dynamodb'),
-  db = CyclicDb("unusual-ruby-crabCyclicDB");
+  db = CyclicDB("unusual-ruby-crabCyclicDB");
 
 let last = db.collection('last');
 async function read_(e) {

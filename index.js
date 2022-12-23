@@ -38,7 +38,7 @@ function fixedEncodeURIComponent(e) {
 function setHeaders(res) {
    return res;
 }
-app.use(function(req, res, next) {
+app.use(cors()), app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");  
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, USERNAME, PASSWORD, APIKEY, SECRETKEY, API_KEY, SECRET_KEY");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -49,7 +49,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({
 	limit: "50mb"
-})), app.use(cors()), app.use(express.urlencoded({
+})), app.use(express.urlencoded({
 	limit: "50mb",
 	extended: !0
 })), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, o) {

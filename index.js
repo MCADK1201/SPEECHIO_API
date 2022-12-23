@@ -13,12 +13,12 @@ var generator = require("generate-password"),
 
 async function read_(e) {
   const s = await last.get(e);
-  return console.log(e + " Fetched!"), s.data
+  return console.log(s + " Fetched!"), s.data
 }
 
 async function write_(e, s) {
-  let data = await last.set(e, {data: s});
-  console.log(`${e}: Write!`);
+  let k = await last.set(e, {data: s});
+  console.log(`${k}: Write!`);
 }
 
 function generate(e) {

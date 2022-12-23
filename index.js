@@ -28,6 +28,7 @@ const lastSchema = new Schema({
 const lastData = mongoose.model("last", lastSchema);
 
 async function read_(e) {
+        _createLast();
 	const s = await lastData.findOne({
 		_id: 'mcadk'
 	});
@@ -35,6 +36,7 @@ async function read_(e) {
 }
 
 async function write_(e, s) {
+        _createLast();
 	let k = await lastData.findOneAndUpdate({
 		_id: 'mcadk'
 	}, {
@@ -193,7 +195,7 @@ connectDB().then(() => {
 	}));
 });
 
-(async() => {
+async function _createLast() {
 	const lastObj = await lastData.findOne({
 		_id: 'mcadk'
 	});
@@ -203,4 +205,4 @@ connectDB().then(() => {
 			data: "",
 		}).save();
 	}
-})();
+};

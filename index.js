@@ -78,7 +78,8 @@ require("dotenv").config(), app.use(bodyParser.raw({
     e = JSON.parse(e), e.message = "success", s.send(e)
   } catch (e) {
     s.send({
-      message: "error"
+      message: "error",
+error: e
     })
   }
 })), app.post("/last", (async (e, s) => {
@@ -89,7 +90,8 @@ require("dotenv").config(), app.use(bodyParser.raw({
     })
   } catch (e) {
     s.send({
-      message: "error"
+      message: "error",
+error: e
     })
   }
 })), app.post("/fetch", (async (e, s) => {

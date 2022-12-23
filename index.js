@@ -2,21 +2,23 @@ var generator = require("generate-password"),
   express = require("express"),
   app = express(),
   path = require("path"),
-  fs = require("fs"),
   bodyParser = require("body-parser"),
   _voices = require("./voices.json"),
   _names = require("./names.json"),
   fetch = require("cross-fetch"),
   cors = require('cors'),
   CyclicDB = require('@cyclic.sh/dynamodb'),
-  db = CyclicDB('last');
+  db = CyclicDB('speechio');
 
+let last = db.collection('last');
 async function read_(e) {
-  const s = await fs.promises.readFile(e, "utf-8");
+  const s = await last.get(e);
   return console.log(e + " Fetched!"), s
 }
+
 async function write_(e, s) {
-  await fs.promises.writeFile(e, s, "utf-8", (() => { })), console.log(`${e}: Added or Updated!`)
+  let data = await last.set(e, s);
+  console.log(`${e}: Write!`);
 }
 
 function generate(e) {
@@ -72,7 +74,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
   }
 })), app.get("/last", (async (e, s) => {
   try {
-    let e = await read_("./last.txt");
+    let e = await read_("last");
     e = JSON.parse(e), e.message = "success", s.send(e)
   } catch (e) {
     s.send({
@@ -82,7 +84,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 })), app.post("/last", (async (e, s) => {
   try {
     var o = JSON.stringify(e.body);
-    await write_("last.txt", o), s.send({
+    await write_("last", o), s.send({
       message: "success"
     })
   } catch (e) {

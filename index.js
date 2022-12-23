@@ -39,42 +39,42 @@ require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({
 	limit: "50mb"
-})), app.use(cors()), app.use(express.urlencoded({
+})), app.use(cors()), app.options('*', cors()), app.use(express.urlencoded({
 	limit: "50mb",
 	extended: !0
 })), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, o) {
-	e.query.id !== process.env.id && s.json({
+	e.query.id !== process.env.id && s.send({
 		message: "error",
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
 })), app.get("/", (async (e, s) => {
 	try {
-		s.json({
+		s.send({
 			message: "success",
 			voice: Object.keys(_voices)
 		})
 	} catch (e) {
-		s.json({
+		s.send({
 			message: "error"
 		})
 	}
 })), app.get("/last", (async (e, s) => {
 	try {
 		let e = await read_("./last.txt");
-		e = JSON.parse(e), e.message = "success", s.json(e)
+		e = JSON.parse(e), e.message = "success", s.send(e)
 	} catch (e) {
-		s.json({
+		s.send({
 			message: "error"
 		})
 	}
 })), app.post("/last", (async (e, s) => {
 	try {
 		var o = JSON.stringify(e.body);
-		await write_("last.txt", o), s.json({
+		await write_("last.txt", o), s.send({
 			message: "success"
 		})
 	} catch (e) {
-		s.json({
+		s.send({
 			message: "error"
 		})
 	}
@@ -103,7 +103,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				headers: a,
 				body: JSON.stringify(t)
 			}).then((e => e.json())).then((function(o) {
-				"success" == o.status ? s.json({
+				"success" == o.status ? s.send({
 					message: "success",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -112,7 +112,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 					},
 					voice: e.body.voice,
 					did: e.body.did
-				}) : s.json({
+				}) : s.send({
 					message: "error",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -130,7 +130,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				let e = o.slice(i * t, (i + 1) * t);
 				u[`${(i + 1)}`] = r.baseUrl + fixedEncodeURIComponent(e);
 			}
-			p = 0, s.json({
+			p = 0, s.send({
 				message: "success",
 				pid: e.body.pid,
 				add: e.body.add,
@@ -140,7 +140,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			})
 		}
 	} catch (o) {
-		s.json({
+		s.send({
 			message: "error",
 			pid: e.body.pid,
 			add: e.body.add,

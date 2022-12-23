@@ -27,18 +27,6 @@ const lastSchema = new Schema({
 
 const lastData = mongoose.model("last", lastSchema);
 
-(async () => {
-	const lastObj = await lastData.findOne({
-		_id: 'mcadk'
-	});
-	if (!lastObj) {
-		new lastData({
-			_id: "mcadk",
-			data: "",
-		}).save();
-	}
-});
-
 async function read_(e) {
 	const s = await lastData.findOne({
 		_id: 'mcadk'
@@ -204,3 +192,15 @@ connectDB().then(() => {
 		console.log("Studio Started!!");
 	}));
 });
+
+(async() => {
+	const lastObj = await lastData.findOne({
+		_id: 'mcadk'
+	});
+	if (!lastObj) {
+		new lastData({
+			_id: "mcadk",
+			data: "",
+		}).save();
+	}
+})();

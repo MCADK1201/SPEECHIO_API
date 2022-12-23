@@ -43,38 +43,38 @@ require("dotenv").config(), app.use(bodyParser.raw({
 	limit: "50mb",
 	extended: !0
 })), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, o) {
-	e.query.id !== process.env.id && s.send({
+	e.query.id !== process.env.id && s.json({
 		message: "error",
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
 })), app.get("/", (async (e, s) => {
 	try {
-		s.send({
+		s.json({
 			message: "success",
 			voice: Object.keys(_voices)
 		})
 	} catch (e) {
-		s.send({
+		s.json({
 			message: "error"
 		})
 	}
 })), app.get("/last", (async (e, s) => {
 	try {
 		let e = await read_("./last.txt");
-		e = JSON.parse(e), e.message = "success", s.send(e)
+		e = JSON.parse(e), e.message = "success", s.json(e)
 	} catch (e) {
-		s.send({
+		s.json({
 			message: "error"
 		})
 	}
 })), app.post("/last", (async (e, s) => {
 	try {
 		var o = JSON.stringify(e.body);
-		await write_("last.txt", o), s.send({
+		await write_("last.txt", o), s.json({
 			message: "success"
 		})
 	} catch (e) {
-		s.send({
+		s.json({
 			message: "error"
 		})
 	}
@@ -103,7 +103,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				headers: a,
 				body: JSON.stringify(t)
 			}).then((e => e.json())).then((function(o) {
-				"success" == o.status ? s.send({
+				"success" == o.status ? s.json({
 					message: "success",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -112,7 +112,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 					},
 					voice: e.body.voice,
 					did: e.body.did
-				}) : s.send({
+				}) : s.json({
 					message: "error",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -130,7 +130,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				let e = o.slice(i * t, (i + 1) * t);
 				u[`${(i + 1)}`] = r.baseUrl + fixedEncodeURIComponent(e);
 			}
-			p = 0, s.send({
+			p = 0, s.json({
 				message: "success",
 				pid: e.body.pid,
 				add: e.body.add,
@@ -140,7 +140,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			})
 		}
 	} catch (o) {
-		s.send({
+		s.json({
 			message: "error",
 			pid: e.body.pid,
 			add: e.body.add,

@@ -36,12 +36,19 @@ function fixedEncodeURIComponent(e) {
 	}))
 }
 
+var whitelist = ['speechi0.web.app', '*']
+
 var corsOptions = {
-  origin: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-  maxAge: 15e5,
-  enablePreflight: true
+  "origin": function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 200,
 };
 
 require("dotenv").config(), app.use(bodyParser.raw({

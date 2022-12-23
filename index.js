@@ -7,17 +7,17 @@ var generator = require("generate-password"),
   _names = require("./names.json"),
   fetch = require("cross-fetch"),
   cors = require('cors'),
-  CyclicDB = require('@cyclic.sh/dynamodb'),
-  db = CyclicDB("unusual-ruby-crabCyclicDB");
+  CyclicDb = require("@cyclic.sh/dynamodb"),
+  db = CyclicDb("unusual-ruby-crabCyclicDB"),
+  last = db.collection('last');
 
-let last = db.collection('last');
 async function read_(e) {
   const s = await last.get(e);
-  return console.log(e + " Fetched!"), s
+  return console.log(e + " Fetched!"), s.data
 }
 
 async function write_(e, s) {
-  let data = await last.set(e, s);
+  let data = await last.set(e, {data: s});
   console.log(`${e}: Write!`);
 }
 

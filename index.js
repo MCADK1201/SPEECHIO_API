@@ -35,64 +35,50 @@ function fixedEncodeURIComponent(e) {
 		return "%" + e.charCodeAt(0).toString(16)
 	}))
 }
-function setHeaders(res) {
-   return res;
-}
-app.use(cors()), app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");  
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, USERNAME, PASSWORD, APIKEY, SECRETKEY, API_KEY, SECRET_KEY");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Cache-Control', 'no-cache');
-  next();
-});
 require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({
 	limit: "50mb"
-})), app.use(express.urlencoded({
+})), app.use(cors()), app.use(express.urlencoded({
 	limit: "50mb",
 	extended: !0
 })), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, o) {
-	e.query.id !== process.env.id && s.send({
+	e.query.id !== process.env.id && s.end({
 		message: "error",
 		status: "unauthorised!"
 	}), e.query.id == process.env.id && o()
 })), app.get("/", (async (e, s) => {
-	setHeaders(s);
 	try {
-		s.send({
+		s.end({
 			message: "success",
 			voice: Object.keys(_voices)
 		})
 	} catch (e) {
-		s.send({
+		s.end({
 			message: "error"
 		})
 	}
 })), app.get("/last", (async (e, s) => {
-	setHeaders(s);
 	try {
 		let e = await read_("./last.txt");
-		e = JSON.parse(e), e.message = "success", s.send(e)
+		e = JSON.parse(e), e.message = "success", s.end(e)
 	} catch (e) {
-		s.send({
+		s.end({
 			message: "error"
 		})
 	}
 })), app.post("/last", (async (e, s) => {
-	setHeaders(s);
 	try {
 		var o = JSON.stringify(e.body);
-		await write_("last.txt", o), s.send({
+		await write_("last.txt", o), s.end({
 			message: "success"
 		})
 	} catch (e) {
-		s.send({
+		s.end({
 			message: "error"
 		})
 	}
 })), app.post("/fetch", (async (e, s) => {
-	setHeaders(s);
 	try {
 		let r = _voices[e.body.voice];
 		var o = generator.generate({
@@ -117,7 +103,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				headers: a,
 				body: JSON.stringify(t)
 			}).then((e => e.json())).then((function(o) {
-				"success" == o.status ? s.send({
+				"success" == o.status ? s.end({
 					message: "success",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -126,7 +112,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 					},
 					voice: e.body.voice,
 					did: e.body.did
-				}) : s.send({
+				}) : s.end({
 					message: "error",
 					pid: e.body.pid,
 					add: e.body.add,
@@ -144,7 +130,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 				let e = o.slice(i * t, (i + 1) * t);
 				u[`${(i + 1)}`] = r.baseUrl + fixedEncodeURIComponent(e);
 			}
-			p = 0, s.send({
+			p = 0, s.end({
 				message: "success",
 				pid: e.body.pid,
 				add: e.body.add,
@@ -154,7 +140,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			})
 		}
 	} catch (o) {
-		s.send({
+		s.end({
 			message: "error",
 			pid: e.body.pid,
 			add: e.body.add,

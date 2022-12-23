@@ -36,8 +36,15 @@ function fixedEncodeURIComponent(e) {
 	}))
 }
 function setHeaders(res) {
-	res.setHeader("Cache-Control", "public,max-age=31536000,immutable");
+   return res;
 }
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");  
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, USERNAME, PASSWORD, APIKEY, SECRETKEY, API_KEY, SECRET_KEY");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Cache-Control', 'no-cache');
+  next();
+});
 require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({

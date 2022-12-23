@@ -25,19 +25,33 @@ const lastSchema = new Schema({
 	data: String
 });
 
+const lastData = mongoose.model("last", lastSchema);
+
+(async () => {
+	const lastObj = await lastData.findOne({
+		_id: 'mcadk'
+	});
+	if (!lastObj) {
+		new lastData({
+			_id: "mcadk",
+			data: "",
+		}).save();
+	}
+});
+
 async function read_(e) {
-	const s = await lastSchema.findOne({
+	const s = await lastData.findOne({
 		_id: 'mcadk'
 	});
 	return console.log(e + " Fetched!"), s.data
 }
 
 async function write_(e, s) {
-	let k = await last.findOneAndUpdate({
+	let k = await lastData.findOneAndUpdate({
 		_id: 'mcadk'
 	}, {
 		data: s
-	});
+	}).exec();
 	console.log(`${e}: Write!`);
 }
 

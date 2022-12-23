@@ -39,7 +39,7 @@ require("dotenv").config(), app.use(bodyParser.raw({
 	type: "application/vnd.custom-type"
 })), app.use(express.json({
 	limit: "50mb"
-})), app.use(cors()), app.options('*', cors()), app.use(express.urlencoded({
+})), app.use(cors()), app.use(express.urlencoded({
 	limit: "50mb",
 	extended: !0
 })), app.use(express.static(path.join(__dirname, "./"))), app.use("/", (function(e, s, o) {

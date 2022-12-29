@@ -32,61 +32,61 @@
   "akshay": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=akshay&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "arvind": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=arvind&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "aarush": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=aarush&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "vishal": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vishal&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "vivek": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vivek&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "vikash": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vikash&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "abhay": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=abhay&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "aanchal": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=aanchal&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "diya": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=diya&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "divya": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=divya&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "harleen": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=harleen&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   },
   "ashita": {
     "baseUrl": "https://tts-api.thor1201.repl.co/?voice=ashita&text=",
     "method": "get",
-    "limit": 10000
+    "limit": 5000
   }
 }

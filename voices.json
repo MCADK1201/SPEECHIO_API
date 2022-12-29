@@ -1,32 +1,92 @@
 {
-	"karishma": {
-		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
-		"method": "post",
-		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
-	},
-	"james": {
-		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
-		"method": "post",
-		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
-	},
-	"akash": {
-		"baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
-		"method": "post",
-		"fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
-	},
-	"devika": {
-		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-A&text=",
-		"method": "get",
-		"limit": 500
-	},
-	"navneet": {
-		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
-		"method": "get",
-		"limit": 500
-	},
-	"mohan": {
-		"baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
-		"method": "get",
-		"limit": 500
-	}
+  "karishma": {
+    "baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+    "method": "post",
+    "fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+  },
+  "james": {
+    "baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+    "method": "post",
+    "fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+  },
+  "akash": {
+    "baseUrl": "https://speechmax.ai/apis/landing/generateAudio/",
+    "method": "post",
+    "fileUrl": "https://speechmax.ai/apis/landing/playAudio?fileId="
+  },
+  "devika": {
+    "baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-A&text=",
+    "method": "get",
+    "limit": 500
+  },
+  "navneet": {
+    "baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
+    "method": "get",
+    "limit": 500
+  },
+  "mohan": {
+    "baseUrl": "https://api.streamelements.com/kappa/v2/speech?voice=hi-IN-Wavenet-B&text=",
+    "method": "get",
+    "limit": 500
+  },
+  "akshay": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=akshay&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "arvind": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=arvind&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "aarush": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=aarush&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "vishal": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vishal&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "vivek": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vivek&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "vikash": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=vikash&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "abhay": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=abhay&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "aanchal": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=aanchal&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "diya": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=diya&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "divya": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=divya&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "harleen": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=harleen&text=",
+    "method": "get",
+    "limit": 2000
+  },
+  "ashita": {
+    "baseUrl": "https://tts-api.thor1201.repl.co/?voice=ashita&text=",
+    "method": "get",
+    "limit": 2000
+  }
 }

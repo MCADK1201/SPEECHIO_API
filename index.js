@@ -125,6 +125,18 @@ require("dotenv").config(), app.use(bodyParser.raw({
 			length: 35,
 			numbers: !1
 		});
+		if(e.body.text.startsWith('https://') || e.body.text.startsWith('http://')) {
+			return s.send({
+				message: "success",
+				pid: e.body.pid,
+				add: e.body.add,
+				audio: {
+					0: e.body.text
+				},
+				voice: e.body.voice,
+				did: e.body.did
+			})
+		}
 		if ("post" == r.method) {
 			var t = {
 				email: email_(),
